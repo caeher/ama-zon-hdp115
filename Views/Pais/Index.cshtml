@@ -1,0 +1,82 @@
+@model IEnumerable<AmaZon.Models.Pais>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table id="tabla_paises" class="table table-light">
+    <thead class="thead-dark">
+        <tr class="thead-dark">
+            <th>
+                @Html.DisplayNameFor(model => model.PaisId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsoAlfa2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Idioma)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaisId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsoAlfa2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Idioma)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PaisId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.PaisId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.PaisId">Delete</a>
+            </td>
+        </tr>
+}
+    <tfoot></tfoot>
+    </tbody>
+</table>
+
+
+@section Scripts {
+     <script>
+        $(document).ready(function () {
+            $('#tabla_paises').DataTable({
+              pageLength: 25,
+              columns: [
+                { data: 'PaisId', title: "#", visible: false },
+                { data: 'Nombre', title: "@Html.DisplayNameFor(model => model.Nombre)" },
+                { data: 'IsoAlfa2', title: "@Html.DisplayNameFor(model => model.IsoAlfa2)" },
+                { data: 'Idioma', title: "@Html.DisplayNameFor(model => model.Idioma)" },
+                { data: 'Acciones', title: 'Acciones'}
+              ],
+              
+              // tfoot
+              initComplete: function () {
+                // clone node tr from thead in tfoot
+                var tr = $('#tabla_paises thead tr').clone();
+                $('#tabla_paises tfoot').append(tr);
+                  
+              }
+            });
+        });
+    </script>
+}
+
